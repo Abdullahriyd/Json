@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="showData">
+    </div>
+    
+    <script>
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(json => showName(json));
+
+       
+        function showName (name)
+        {
+            let names = name.map(e =>
+            {   
+                //******* Each Object in JSON Array ********//
+                for (const key in e) {
+                    
+                    const div = document.getElementById('showData');
+                    let p = document.createElement('p');
+
+                //********* Address object **************//  
+
+                    if (e[key] == e.address){
+                        const addresses = e.address;
+
+                        const div = document.getElementById('showData');
+                        let p5 = document.createElement('p');
+                        p5.innerText = key.toUpperCase();
+                        div.appendChild(p5);
+                
+                        for (const property in addresses) {
+                            const div = document.getElementById('showData');
+                            
+                            let p = document.createElement('li');
+
+                        //*********** Geo object ************//
+
+                                if(addresses[property] ==  e.address.geo ){
+                                    const geos = e.address.geo;
+
+                                    const div = document.getElementById('showData');
+                                    let p5 = document.createElement('p');
+                                    p5.innerText = property.toUpperCase();
+                                    div.appendChild(p5);
+
+                                    for (const property in geos) {
+                                        const div = document.getElementById('showData');
+                                        let p = document.createElement('li');
+                                        let ul = document.createElement('ul');
+                                        p.innerText = `${property} : ${geos[property]}`
+                                        div.appendChild(ul).appendChild(p);                  
+                                    }
+                                }
+                            if(property == 'geo'){
+                                continue;
+                            }
+                            p.innerText = `${property} : ${addresses[property]}`;
+                            div.appendChild(p);                  
+                        }
+                    }
+
+                //********** company object *************//
+
+                    if(e[key] == e.company){
+                        const companies = e.company;
+
+                        const div = document.getElementById('showData');
+                        let p5 = document.createElement('p');
+                        p5.innerText = key.toUpperCase();
+                        div.appendChild(p5);
+
+                        for (const property in companies) {
+                            const div = document.getElementById('showData');
+                            let p = document.createElement('li');
+                            p.innerText = `${property} : ${companies[property]}`
+                            div.appendChild(p);                  
+                        } 
+                    }
+                    
+                    if(key == 'company' || key == 'address'){
+                        continue;
+                    }
+                    p.innerText = `${key} : ${e[key]}`
+                    div.appendChild(p); 
+                } 
+            })    
+        }
+    </script>
+</body>
+</html>
